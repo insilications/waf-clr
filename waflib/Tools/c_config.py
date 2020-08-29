@@ -187,8 +187,11 @@ def parse_flags(self, line, uselib_store, env=None, force_static=False, posix=No
 			app('CFLAGS', tmp)
 			app('CXXFLAGS', tmp)
 			app('LINKFLAGS', tmp)
-		elif x.endswith(('.a', '.dylib', '.lib')) or so_re.search(x):
+		elif x.endswith(('.dylib', '.lib')) or so_re.search(x):
 			appu('LINKFLAGS', x) # not cool, #762
+		elif x.endswith('.a'):
+			prefix = 'STLIB'
+			app(prefix, x)
 		else:
 			self.to_log('Unhandled flag %r' % x)
 
